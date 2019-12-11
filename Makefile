@@ -4,20 +4,22 @@ TARGETS = \
 	som60 som60sd som60sd_mfg som60sd-wbx3 \
 	som60x2 som60x2sd som60x2sd_mfg som60x2sd-wbx3 \
 	wb60 wb60sd \
+	wb50n_sysd_fips wb50nsd_sysd_fips som60_fips som60sd_fips \
 	ig60ll ig60llsd	ig60sd-wbx3 \
-	bdimx6_rdvk
+	bdimx6 bdimx6_rdvk
 
 TARGETS_COMPONENT = \
 	backports backports-test firmware \
 	reg50n-arm-eabi reg50n-arm-eabihf \
-	mfg60n-arm-eabi mfg60n-x86 mfg60n-x86-64 mfg60n-arm-eabihf mfg60n-arm-eabiaarch64 mfg60n-powerpc-e5500\
+	mfg60n-arm-eabi mfg60n-x86 mfg60n-x86-64 mfg60n-arm-eabihf mfg60n-arm-eabiaarch64 mfg60n-powerpc-e5500 \
 	regCypress-arm-eabi regCypress-arm-eabihf regCypress-arm-eabiaarch64 \
 	sterling_supplicant-x86 sterling_supplicant-arm \
 	summit_supplicant-powerpc-e5500 summit_supplicant_openssl_1_0_2-powerpc-e5500 \
 	summit_supplicant-x86 summit_supplicant-arm-eabi summit_supplicant-arm-eabihf \
 	summit_supplicant-aarch64-eabihf summit_supplicant_openssl_1_0_2-arm-eabihf \
 	summit_supplicant_openssl_1_0_2-aarch64-eabihf summit_supplicant_openssl_1_0_2-arm-eabi \
-	summit_supplicant_openssl_1_0_2-x86	summit_supplicant_legacy-arm-eabi \
+	summit_supplicant_openssl_1_0_2-x86 summit_supplicant_legacy-arm-eabi \
+	summit_supplicant_fips-arm-eabihf laird_openssl_fips-arm-eabihf
 	adaptive_ww-arm-eabi adaptive_ww-arm-eabihf adaptive_ww-x86 adaptive_ww-arm-eabiaarch64 adaptive_ww-powerpc-e5500 \
 	adaptive_ww_openssl_1_0_2-arm-eabi adaptive_ww_openssl_1_0_2-arm-eabihf adaptive_ww_openssl_1_0_2-x86 \
 	adaptive_ww_openssl_1_0_2-arm-eabiaarch64 adaptive_ww_openssl_1_0_2-powerpc-e5500
