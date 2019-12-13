@@ -1,5 +1,5 @@
 TARGETS = \
-	wb50n_legacy wb45_legacy \
+	wb50n_legacy wb50n_rdvk wb45n_legacy \
 	wb50n_sysd wb50nsd_sysd wb50n_sysd_rdvk wb50nsd_sysd-wbx3 \
 	som60 som60sd som60sd_mfg som60sd-wbx3 \
 	som60x2 som60x2sd som60x2sd_mfg som60x2sd-wbx3 \
@@ -37,7 +37,11 @@ export BR2_EXTERNAL =
 
 TARGETS_SRC_CLEAN = $(addsuffix -clean, $(TARGETS_SRC))
 
+ifneq ($(BR_DIR),)
 include $(BR_DIR)/board/laird/build-rules.mk
+else
+OUTPUT_DIR ?= $(abspath $(MK_DIR)/../buildroot/output)
+endif
 
 all: $(TARGETS_SRC) linux-docs
 clean: $(TARGETS_SRC_CLEAN)
@@ -45,8 +49,8 @@ clean: $(TARGETS_SRC_CLEAN)
 LINUX_DOCS_SRC_DIR = $(MK_DIR)/../linux_docs
 LINUX_DOCS_DST_DIR = $(OUTPUT_DIR)/linux-docs
 
-ifneq ($(LAIRD_RELEASE_STRING),)
-RELEASE_SUFFIX = -$(LAIRD_RELEASE_STRING)
+ifneq ($(VERSION),)
+RELEASE_SUFFIX = -$(VERSION)
 endif
 
 linux-docs:
