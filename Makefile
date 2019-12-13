@@ -29,7 +29,7 @@ TARGETS_SRC = sterling_supplicant-src lrd-network-manager-src linux-docs
 
 MK_DIR = $(realpath $(dir $(firstword $(MAKEFILE_LIST))))
 BR_DIR = $(realpath $(MK_DIR)/../buildroot)
-CONFIG_DIR = $(BR_DIR)
+CONFIG_DIR = $(BR_DIR)/configs
 
 export BR2_EXTERNAL =
 
@@ -40,8 +40,12 @@ include $(BR_DIR)/board/laird/build-rules.mk
 all: $(TARGETS_SRC) linux-docs
 clean: $(TARGETS_SRC_CLEAN)
 
-LINUX_DOCS_SRC_DIR = $(MK_DIR)/linux_docs
+LINUX_DOCS_SRC_DIR = $(MK_DIR)/../linux_docs
 LINUX_DOCS_DST_DIR = $(OUTPUT_DIR)/linux-docs
+
+ifneq ($(LAIRD_RELEASE_STRING),)
+RELEASE_SUFFIX = -$(LAIRD_RELEASE_STRING)
+endif
 
 linux-docs:
 	mkdir -p $(LINUX_DOCS_DST_DIR)/build $(LINUX_DOCS_DST_DIR)/images
@@ -51,25 +55,27 @@ linux-docs:
 
 	$(MAKE) -C $(LINUX_DOCS_DST_DIR)/build/60_series all
 	cd $(LINUX_DOCS_DST_DIR)/build/60_series && \
-	tar -cjf $(LINUX_DOCS_DST_DIR)/images/laird-sterling-60-docs.tar.bz2 \
+	tar -cjf $(LINUX_DOCS_DST_DIR)/images/laird-sterling-60-docs$(RELEASE_SUFFIX).tar.bz2 \
 		app_note_*.pdf \
 		sig_60_series_radio.pdf \
 		user_guide_60_dvk_su60_sipt.pdf
 
 	$(MAKE) -C $(LINUX_DOCS_DST_DIR)/build/LWB all
-	tar -cjf $(LINUX_DOCS_DST_DIR)/images/laird-sterling-lwb-docs.tar.bz2 \
+	tar -cjf $(LINUX_DOCS_DST_DIR)/images/laird-sterling-lwb-docs$(RELEASE_SUFFIX).tar.bz2 \
 		-C $(LINUX_DOCS_DST_DIR)/build/LWB \
 		imx6_integration_howto.pdf
 
 lrd-network-manager-src:
 	mkdir -p $(OUTPUT_DIR)/$@/images
 	tar -C $(BR_DIR)/package/lrd/externals/lrd-network-manager --exclude=.git \
-		--transform "s,.,lrd-network-manager," -cJf $(OUTPUT_DIR)/$@/images/$@.tar.xz .
+		--transform "s,.,lrd-network-manager$(RELEASE_SUFFIX)," \
+		-cJf $(OUTPUT_DIR)/$@/images/$@$(RELEASE_SUFFIX).tar.xz .
 
 sterling_supplicant-src:
 	mkdir -p $(OUTPUT_DIR)/$@/images
 	tar -C $(BR_DIR)/package/lrd/externals/sterling_supplicant --exclude=.git \
-		--transform "s,.,sterling_supplicant," -czf $(OUTPUT_DIR)/$@/images/$@.tar.gz \
+		--transform "s,.,sterling_supplicant$(RELEASE_SUFFIX)," \
+		-czf $(OUTPUT_DIR)/$@/images/$@$(RELEASE_SUFFIX).tar.gz \
 		README COPYING CONTRIBUTIONS src wpa_supplicant hs20 laird
 
 $(TARGETS_SRC_CLEAN): %-clean:
