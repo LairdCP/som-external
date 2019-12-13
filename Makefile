@@ -10,14 +10,14 @@ TARGETS = \
 TARGETS_COMPONENT = \
 	backports backports-test firmware \
 	reg50n-arm-eabi reg50n-arm-eabihf \
-	mfg60n-arm-eabi mfg60n-x86 mfg60n-x86-64 mfg60n-arm-eabihf mfg60n-arm-eabiaarch64 mfg60n-powerpc-e5500\
+	mfg60n-arm-eabi mfg60n-x86 mfg60n-x86-64 mfg60n-arm-eabihf mfg60n-arm-eabiaarch64 mfg60n-powerpc-e5500 \
 	regCypress-arm-eabi regCypress-arm-eabihf regCypress-arm-eabiaarch64 \
 	sterling_supplicant-x86 sterling_supplicant-arm \
 	summit_supplicant-powerpc-e5500 summit_supplicant_openssl_1_0_2-powerpc-e5500 \
 	summit_supplicant-x86 summit_supplicant-arm-eabi summit_supplicant-arm-eabihf \
 	summit_supplicant-aarch64-eabihf summit_supplicant_openssl_1_0_2-arm-eabihf \
 	summit_supplicant_openssl_1_0_2-aarch64-eabihf summit_supplicant_openssl_1_0_2-arm-eabi \
-	summit_supplicant_openssl_1_0_2-x86	summit_supplicant_legacy-arm-eabi \
+	summit_supplicant_openssl_1_0_2-x86 summit_supplicant_legacy-arm-eabi \
 	adaptive_ww-arm-eabi adaptive_ww-arm-eabihf adaptive_ww-x86 adaptive_ww-arm-eabiaarch64 adaptive_ww-powerpc-e5500 \
 	adaptive_ww_openssl_1_0_2-arm-eabi adaptive_ww_openssl_1_0_2-arm-eabihf adaptive_ww_openssl_1_0_2-x86 \
 	adaptive_ww_openssl_1_0_2-arm-eabiaarch64 adaptive_ww_openssl_1_0_2-powerpc-e5500
@@ -35,7 +35,11 @@ export BR2_EXTERNAL =
 
 TARGETS_SRC_CLEAN = $(addsuffix -clean, $(TARGETS_SRC))
 
+ifneq ($(BR_DIR),)
 include $(BR_DIR)/board/laird/build-rules.mk
+else
+OUTPUT_DIR ?= $(abspath $(MK_DIR)/../buildroot/output)
+endif
 
 all: $(TARGETS_SRC) linux-docs
 clean: $(TARGETS_SRC_CLEAN)
@@ -43,8 +47,8 @@ clean: $(TARGETS_SRC_CLEAN)
 LINUX_DOCS_SRC_DIR = $(MK_DIR)/../linux_docs
 LINUX_DOCS_DST_DIR = $(OUTPUT_DIR)/linux-docs
 
-ifneq ($(LAIRD_RELEASE_STRING),)
-RELEASE_SUFFIX = -$(LAIRD_RELEASE_STRING)
+ifneq ($(VERSION),)
+RELEASE_SUFFIX = -$(VERSION)
 endif
 
 linux-docs:
