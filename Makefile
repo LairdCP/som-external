@@ -5,7 +5,8 @@ TARGETS = \
 	som60x2 som60x2sd som60x2sd_mfg som60x2sd-wbx3 \
 	wb60 wb60sd \
 	ig60ll ig60llsd	ig60sd-wbx3 \
-	bdimx6_rdvk
+	bdimx6_rdvk \
+	som60_toolchain
 
 TARGETS_COMPONENT = \
 	backports backports-test firmware \
