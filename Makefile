@@ -11,7 +11,7 @@ TARGETS = \
 
 TARGETS_COMPONENT = \
 	backports backports-test firmware \
-	reg50n-arm-eabi reg50n-arm-eabihf \
+	reg45n-arm-eabi reg50n-arm-eabi reg50n-arm-eabihf \
 	mfg60n-arm-eabi mfg60n-x86 mfg60n-x86-64 mfg60n-arm-eabihf mfg60n-arm-eabiaarch64 mfg60n-powerpc-e5500 \
 	regCypress-arm-eabi regCypress-arm-eabihf regCypress-arm-eabiaarch64 \
 	sterling_supplicant-x86 sterling_supplicant-arm \
