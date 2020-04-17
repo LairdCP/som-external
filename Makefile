@@ -65,6 +65,7 @@ linux-docs:
 	tar -cjf $(LINUX_DOCS_DST_DIR)/images/laird-sterling-60-docs$(RELEASE_SUFFIX).tar.bz2 \
 		app_note_*.pdf \
 		sig_60_series_radio.pdf \
+		user_guide_60_networkmanager.pdf \
 		user_guide_60_dvk_su60_sipt.pdf
 
 	$(MAKE) -C $(LINUX_DOCS_DST_DIR)/build/LWB all
