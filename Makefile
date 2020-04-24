@@ -65,6 +65,7 @@ linux-docs:
 	$(MAKE) -C $(LINUX_DOCS_DST_DIR)/build/60_series all
 	cd $(LINUX_DOCS_DST_DIR)/build/60_series && \
 	tar -cjf $(LINUX_DOCS_DST_DIR)/images/laird-sterling-60-docs$(RELEASE_SUFFIX).tar.bz2 \
+		--owner=root --group=root \
 		app_note_*.pdf \
 		sig_60_series_radio.pdf \
 		user_guide_60_networkmanager.pdf \
@@ -73,18 +74,21 @@ linux-docs:
 	$(MAKE) -C $(LINUX_DOCS_DST_DIR)/build/LWB all
 	tar -cjf $(LINUX_DOCS_DST_DIR)/images/laird-sterling-lwb-docs$(RELEASE_SUFFIX).tar.bz2 \
 		-C $(LINUX_DOCS_DST_DIR)/build/LWB \
+		--owner=root --group=root \
 		imx6_integration_howto.pdf
 
 lrd-network-manager-src:
 	mkdir -p $(OUTPUT_DIR)/$@/images
 	tar -C $(BR_DIR)/package/lrd/externals/lrd-network-manager --exclude=.git \
 		--transform "s,.,lrd-network-manager$(RELEASE_SUFFIX)," \
+		--owner=root --group=root \
 		-cJf $(OUTPUT_DIR)/$@/images/$@$(RELEASE_SUFFIX).tar.xz .
 
 sterling_supplicant-src:
 	mkdir -p $(OUTPUT_DIR)/$@/images
 	tar -C $(BR_DIR)/package/lrd/externals/sterling_supplicant --exclude=.git \
-		--transform "s,.,sterling_supplicant$(RELEASE_SUFFIX)," \
+		--transform "s,^,sterling_supplicant$(RELEASE_SUFFIX)/," \
+		--owner=root --group=root \
 		-czf $(OUTPUT_DIR)/$@/images/$@$(RELEASE_SUFFIX).tar.gz \
 		README COPYING CONTRIBUTIONS src wpa_supplicant hs20 laird
 
