@@ -27,10 +27,11 @@ TARGETS_COMPONENT = \
 	adaptive_ww-arm-eabi adaptive_ww-arm-eabihf adaptive_ww-x86 \
 	adaptive_ww-x86_64 adaptive_ww-aarch64 adaptive_ww-powerpc64-e5500 \
 	adaptive_ww_openssl_1_0_2-arm-eabi adaptive_ww_openssl_1_0_2-arm-eabihf adaptive_ww_openssl_1_0_2-x86 \
-	adaptive_ww_openssl_1_0_2-aarch64 adaptive_ww_openssl_1_0_2-powerpc64-e5500 adaptive_ww_openssl_1_0_2-x86_64
+	adaptive_ww_openssl_1_0_2-aarch64 adaptive_ww_openssl_1_0_2-powerpc64-e5500 adaptive_ww_openssl_1_0_2-x86_64 \
+	adaptive_bt-arm-eabi adaptive_bt-arm-eabihf adaptive_bt-x86_64 adaptive_bt-aarch64 adaptive_bt-powerpc64-e5500 adaptive_bt-x86
 
 # NOTE, summit_supplicant is *NOT* released as source
-TARGETS_SRC = sterling_supplicant-src lrd-network-manager-src linux-docs
+TARGETS_SRC = sterling_supplicant-src lrd-network-manager-src adaptive_bt-src linux-docs
 
 #**************************************************************************
 
@@ -93,6 +94,14 @@ sterling_supplicant-src:
 		--owner=root --group=root \
 		-czf $(OUTPUT_DIR)/$@/images/$@$(RELEASE_SUFFIX).tar.gz \
 		README COPYING CONTRIBUTIONS src wpa_supplicant hs20 laird
+
+adaptive_bt-src:
+	mkdir -p $(OUTPUT_DIR)/$@/images
+	tar -C $(BR_DIR)/package/lrd/externals/adaptive_bt --exclude=.git \
+		--transform "s,^,adaptive_bt$(RELEASE_SUFFIX)/," \
+		--owner=root --group=root \
+		-czf $(OUTPUT_DIR)/$@/images/$@$(RELEASE_SUFFIX).tar.gz \
+		Makefile include src support
 
 $(TARGETS_SRC_CLEAN): %-clean:
 	rm -rf $(OUTPUT_DIR)/$*
