@@ -22,7 +22,9 @@ TARGETS_COMPONENT = \
 	summit_supplicant-aarch64 summit_supplicant_openssl_1_0_2-arm-eabihf \
 	summit_supplicant_openssl_1_0_2-aarch64 summit_supplicant_openssl_1_0_2-arm-eabi \
 	summit_supplicant_openssl_1_0_2-x86 summit_supplicant_legacy-arm-eabi \
-	summit_supplicant_fips-arm-eabihf laird_openssl_fips-arm-eabihf \
+	summit_supplicant_fips-arm-eabihf \
+	summit_supplicant_legacy_fips-arm-eabihf summit_supplicant_legacy_fips-arm-eabi \
+	laird_openssl_fips-arm-eabihf laird_openssl_fips-arm-eabi \
 	adaptive_ww-arm-eabi adaptive_ww-arm-eabihf adaptive_ww-x86 \
 	adaptive_ww-x86_64 adaptive_ww-aarch64 adaptive_ww-powerpc64-e5500 \
 	adaptive_ww_openssl_1_0_2-arm-eabi adaptive_ww_openssl_1_0_2-arm-eabihf adaptive_ww_openssl_1_0_2-x86 \
