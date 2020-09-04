@@ -6,6 +6,7 @@ TARGETS = \
 	som60x2 som60x2sd som60x2sd_mfg som60x2sd-wbx3 \
 	wb60 wb60sd \
 	wb50n_sysd_fips wb50nsd_sysd_fips som60_fips som60sd_fips \
+	wb50n_legacy_fips wb45n_legacy_fips \
 	ig60ll ig60llsd	ig60sd-wbx3 \
 	bdimx6 bdimx6_rdvk \
 	som60_toolchain wb4x_toolchain
