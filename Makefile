@@ -1,33 +1,34 @@
+ARCH_all = x86 x86_64 arm-eabi arm-eabihf aarch64 powerpc64-e5500
+ARCH_lrd = arm-eabi arm-eabihf
+
+MAKE_TARGETS = $(foreach t,$(TARGETS_COMPONENT_$(1)), $(addprefix $(t)-,$(ARCH_$(1))))
+
 TARGETS = \
-	wb50n_legacy wb45n_legacy \
-	wb50n_rdvk wb40n_rdvk wb40n_rdvk_3_2 \
+	wb50n_legacy wb50n_rdvk wb45n_legacy \
+	wb40n_rdvk wb40n_rdvk_3_2 \
 	wb50n_sysd wb50nsd_sysd wb50n_sysd_rdvk wb50nsd_sysd-wbx3 \
-	som60 som60sd som60sd_mfg som60sd-wbx3 som60_lwb_mfg som60x2_rdvk \
-	som60x2 som60x2sd som60x2sd_mfg som60x2sd-wbx3 som60x2_lwb_mfg \
+	som60 som60sd som60sd_mfg som60sd-wbx3 \
+	som60x2 som60x2sd som60x2sd_mfg som60x2sd-wbx3 \
+	som60_lwb_mfg som60x2_rdvk som60x2_lwb_mfg \
 	wb60 wb60sd \
 	ig60ll ig60llsd	ig60sd-wbx3 \
 	bdimx6_rdvk \
 	som60_toolchain wb4x_toolchain
 
+TARGETS_COMPONENT_all = mfg60n \
+	summit_supplicant summit_supplicant_openssl_1_0_2 \
+	adaptive_ww adaptive_ww_openssl_1_0_2 adaptive_bt
+
+TARGETS_COMPONENT_lrd = reg45 reg50 regCypress \
+	summit_supplicant_legacy summit_supplicant_legacy_fips \
+	laird_openssl_fips
+
 TARGETS_COMPONENT = \
+	$(call MAKE_TARGETS,all) $(call MAKE_TARGETS,lrd) \
 	backports backports-test firmware \
-	reg45n-arm-eabi reg50n-arm-eabi reg50n-arm-eabihf \
-	mfg60n-arm-eabi mfg60n-x86 mfg60n-arm-eabihf \
-	mfg60n-x86_64 mfg60n-aarch64 mfg60n-powerpc64-e5500 \
-	regCypress-arm-eabi regCypress-arm-eabihf regCypress-aarch64 \
+	regCypress-aarch64 \
 	sterling_supplicant-x86 sterling_supplicant-arm \
-	summit_supplicant-powerpc64-e5500 summit_supplicant_openssl_1_0_2-powerpc64-e5500 \
-	summit_supplicant-x86 summit_supplicant-arm-eabi summit_supplicant-arm-eabihf \
-	summit_supplicant-aarch64 summit_supplicant_openssl_1_0_2-arm-eabihf \
-	summit_supplicant_openssl_1_0_2-aarch64 summit_supplicant_openssl_1_0_2-arm-eabi \
-	summit_supplicant_openssl_1_0_2-x86 summit_supplicant_legacy-arm-eabi \
-	summit_supplicant_fips-arm-eabihf \
-	summit_supplicant_legacy_fips-arm-eabihf summit_supplicant_legacy_fips-arm-eabi \
-	adaptive_ww-arm-eabi adaptive_ww-arm-eabihf adaptive_ww-x86 \
-	adaptive_ww-x86_64 adaptive_ww-aarch64 adaptive_ww-powerpc64-e5500 \
-	adaptive_ww_openssl_1_0_2-arm-eabi adaptive_ww_openssl_1_0_2-arm-eabihf adaptive_ww_openssl_1_0_2-x86 \
-	adaptive_ww_openssl_1_0_2-aarch64 adaptive_ww_openssl_1_0_2-powerpc64-e5500 adaptive_ww_openssl_1_0_2-x86_64 \
-	adaptive_bt-arm-eabi adaptive_bt-arm-eabihf adaptive_bt-x86_64 adaptive_bt-aarch64 adaptive_bt-powerpc64-e5500 adaptive_bt-x86
+	summit_supplicant_fips-arm-eabihf
 
 # NOTE, summit_supplicant is *NOT* released as source
 TARGETS_SRC = sterling_supplicant-src lrd-network-manager-src adaptive_bt-src linux-docs
