@@ -19,7 +19,7 @@ TARGETS_COMPONENT_all = mfg60n \
 	summit_supplicant summit_supplicant_openssl_1_0_2 \
 	adaptive_ww adaptive_ww_openssl_1_0_2 adaptive_bt
 
-TARGETS_COMPONENT_lrd = reg45 reg50 regCypress \
+TARGETS_COMPONENT_lrd = reg45n reg50n regCypress \
 	summit_supplicant_legacy summit_supplicant_legacy_fips \
 	laird_openssl_fips
 
