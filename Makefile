@@ -78,7 +78,7 @@ linux-docs:
 	tar -cjf $(LINUX_DOCS_DST_DIR)/images/laird-sterling-lwb-docs$(RELEASE_SUFFIX).tar.bz2 \
 		-C $(LINUX_DOCS_DST_DIR)/build/LWB \
 		--owner=root --group=root \
-		imx6_integration_howto.pdf
+		sig_LWB_series_radio.pdf
 
 lrd-network-manager-src:
 	mkdir -p $(OUTPUT_DIR)/$@/images
