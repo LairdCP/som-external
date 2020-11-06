@@ -7,7 +7,7 @@ TARGETS = \
 	wb50n_legacy wb50n_rdvk wb45n_legacy \
 	wb40n_rdvk wb40n_rdvk_3_2 \
 	wb50n_sysd wb50nsd_sysd wb50nsd_sysd-wbx3 \
-	som60 som60sd som60sd_mfg som60sd-wbx3 \
+	som60 som60sd som60sd_mfg som60sd-wbx3 som60sd_sdcsdk_nm \
 	som60x2 som60x2sd som60x2sd_mfg som60x2sd-wbx3 \
 	wb60 wb60sd wb60u wb60usd \
 	wb50n_sysd_fips wb50nsd_sysd_fips som60_fips som60sd_fips \
