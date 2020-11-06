@@ -6,7 +6,7 @@ MAKE_TARGETS = $(foreach t,$(TARGETS_COMPONENT_$(1)), $(addprefix $(t)-,$(ARCH_$
 TARGETS = \
 	wb50n_legacy wb50n_rdvk wb45n_legacy \
 	wb40n_rdvk wb40n_rdvk_3_2 \
-	wb50n_sysd wb50nsd_sysd wb50n_sysd_rdvk wb50nsd_sysd-wbx3 \
+	wb50n_sysd wb50nsd_sysd wb50nsd_sysd-wbx3 \
 	som60 som60sd som60sd_mfg som60sd-wbx3 \
 	som60x2 som60x2sd som60x2sd_mfg som60x2sd-wbx3 \
 	wb60 wb60sd wb60u wb60usd \
