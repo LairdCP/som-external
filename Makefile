@@ -12,6 +12,7 @@ TARGETS = \
 	wb60 wb60sd wb60u wb60usd \
 	wb50n_sysd_fips wb50nsd_sysd_fips som60_fips som60sd_fips \
 	wb50n_legacy_fips wb45n_legacy_fips \
+	wb50nsd_sysd_fips_dev som60sd_fips_dev wb45n_legacy_fips_dev \
 	ig60ll ig60llsd	ig60sd-wbx3 \
 	bdimx6 bdimx6_rdvk \
 	som60_toolchain wb4x_toolchain
