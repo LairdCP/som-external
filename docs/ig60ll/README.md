@@ -25,7 +25,7 @@ The Sentrius™ IG60-SERIAL Laird Linux Build is based on Laird Connectivity 60 
 The Sentrius™ IG60 Laird Linux Build is based on Laird Connectivity's 60 Series SOM module, and is similarly configured and developed. This guide is designed to walk you through Laird Connectivity's development process for the IG60-SERIAL, including the Laird Connectivity Linux board support package. The most seamless workflow for developing your application for the IG60-SERIAL is to set up a GitHub account, configure your SSH keys, and then install and configure Git on your development PC.
 
 ### Ubuntu
-Laird recommends Ubuntu 16.04 64-bit as the base operating system for your development. All instructions in this reference guide assume a developer on an Ubuntu 16.04 64-bit system. If using other than Ubuntu 16.04 64-bit, please ensure you Linux distribution is a 64-bit variant as the cross-compiling toolchain requires a 64-bit Linux environment.
+Laird recommends Ubuntu 18.04 64-bit as the base operating system for your development. All instructions in this reference guide assume a developer on an Ubuntu 18.04 64-bit system. If using other than Ubuntu 18.04 64-bit, please ensure you Linux distribution is a 64-bit variant as the cross-compiling toolchain requires a 64-bit Linux environment.
 
 ### SSH
 Laird makes extensive use of GitHub and having proper Secure Shell (SSH) access to our repositories on GitHub. If you haven't set up SSH, you can use the instructions below to enable SSH for use with GitHub.
@@ -155,6 +155,19 @@ Syncing disks.
 ```
 You can now insert your SD card into the IG hardware development kit and press the reset button to boot into the new SD card image.
 
+### Flashing a developer's SD card image on Windows 7 or later
+
+If you are not able to access USB flash drives on a virtual machine, here is a way to flash the image on windows. You have to download and install [balenaEtcher](https://www.balena.io/etcher/) first.
+```
+1. Build an image on ubuntu after download and extract ig60llsd-laird-7.x.y.z.tar.bz2:
+   ~/Downloads/ig60llsd-laird-7.x.y.z$ sudo ./mksdimg.sh sdimage
+   and copy sdimage.xz to Windows.
+
+3. Go to Windows Start menu and click `balenaEtcher`, then select sdimage.xz as source file and sd card as the target.
+
+4. Click `Flash` and wait until it finishes.
+```
+
 ### Using a prebuilt SDK
 
 Laird Linux releases include a prebuilt SDK to start doing application development for a Laird IG. For the IG60, this prebuilt SDK is called ig60llsd-sdk-A.B.C.D.tar.bz2 and can be found with each release at the [IG60 Laird Linux release page](https://github.com/LairdCP/IG60-Laird-Linux-Release-Packages/releases). The prebuilt SDK includes the toolchain and all development files of the software packages used to generate the prebuilt SD card image from that release. The SDK can be set up for use with an IDE to allow application developers to not need a full BSP on their system. To use the SDK, extract the SDK tarball then run the script relocate-sdk.sh (located at the top directory of the SDK), to make sure all paths are updated with the new location. For more information on using SDKs generated from Laird's Buildroot fork, see the [Buildroot manual's section on the SDK](https://buildroot.org/downloads/manual/manual.html#_advanced_usage).
@@ -167,10 +180,10 @@ Laird provides manifest files for customers to obtain released resources. Each m
 <manifest>
     <remote name="origin" fetch="ssh://git@github.com/LairdCP" />
     <default remote="origin" revision="refs/tags/LRD-REL-7.x.y.z" />
-    <project path="wb" name="wb.git" />
+    <project path="som-external" name="som-external.git" />
  </manifest>
 ```
-A `remote` element is defined here, which is also the default. Project `wb.git` will be fetched from `ssh://git@github.com/LairdCP/wb.git` with revision `refs/tags/LRD-REL-7.x.y.z`.
+A `remote` element is defined here, which is also the default. Project `som-external.git` will be fetched from `https://github.com/LairdCP/som-external.git` with revision `refs/tags/LRD-REL-7.x.y.z`.
 
 ### Downloading the board support package source code
 
@@ -178,8 +191,8 @@ First step, pick which release you want. Odds are you want the most recent of yo
 
 Next, use repo to initalize and fetch your release. This is a two-step process: first you tell repo which manifest to use and then you tell it to fetch everything.
 
-    mkdir ig60_7.x.y.z_source
-    cd ig60_7.x.y.z_source
+    mkdir lrd-7.x.y.z
+    cd lrd-7.x.y.z
     repo init -u git@github.com:LairdCP/IG60-Laird-Linux-Release-Packages.git -m ig60_7.x.y.z.xml
     repo sync
 
@@ -188,13 +201,12 @@ _Note: Repo will initialize a .repo directory and then place all files directly 
 ### Building the SD Card developer's image
 Once your repo sync is finished, you are ready to build your own SD card image. This can be achieved by the following:
 
-    cd wb
     make -C som-external/ ig60llsd
 
 Once your build completes, you will find the output similar to below:
 ```
-~/git/lrd-7.x.y.z/wb$ cd buildroot/output/ig60llsd/images/
-~/git/lrd-7.x.y.z/wb/buildroot/output/ig60llsd/images$ ls -al
+~/git/lrd-7.x.y.z$ cd buildroot/output/ig60llsd/images/
+~/git/lrd-7.x.y.z/buildroot/output/ig60llsd/images$ ls -al
 at91-ig60ll.dtb
 boot.scr -> ../../../board/laird/configs-common/image/boot_mmc.scr
 ig60sd-laird.tar.bz2
@@ -222,13 +234,12 @@ Go to images/ and run `sudo ./mksdcard.sh /dev/sd-device` to flash the SD card.
 ### Building the NAND image
 NAND image can be built by the following:
 
-    cd wb
     make -C som-external/ ig60ll
 
 Once your build completes, you will find the output similar to below:
 ```
-~/git/lrd-7.x.y.z/wb$ cd buildroot/output/ig60ll/images/
-~/git/lrd-7.x.y.z/wb/buildroot/output/ig60ll/images$ ls -al
+~/git/lrd-7.x.y.z$ cd buildroot/output/ig60ll/images/
+~/git/lrd-7.x.y.z/buildroot/output/ig60ll/images$ ls -al
 at91-ig60ll.dtb
 boot.bin
 boot.scr -> ../../../board/laird/configs-common/image/boot.scr
@@ -299,11 +310,110 @@ Then add it to your build environment:
 ### Create a custom SDK
 If you'd like to create a custom SDK from your customized source build, while in the target's output directory, issue a `make sdk`:
 ```
-~/git/lrd-7.x.y.z/wb/buildroot/output/ig60llsd$ make sdk
+~/git/lrd-7.x.y.z/buildroot/output/ig60llsd$ make sdk
 ```
 
 ## NetworkManager
 Laird uses its own customized fork of NetworkManager for networking configuration, including WiFi profile management. For more information on using NetworkManager please see our [Laird NetworkManager User Guide](https://github.com/LairdCP/SOM60-Release-Packages/releases/download/LRD-REL-6.0.0.138/user_guide_laird_networkmanager_0.1.pdf).
+
+## Firewalld
+Laird uses `firewalld` as its network security system. Firewalld provides a dynamically managed firewall, which allows updating rules without breaking existing connections. Firewalld uses zones and services instead of tables and chains. A firewalld zone defines the trust level for a connection, an interface etc., while a firewalld service is mainly a list of local ports and destinations. `firewalld` has predefined zones and services located in `$(TARGET_DIR)/usr/lib/firewalld/zones` and `$(TARGET_DIR)/usr/lib/firewalld/services`. The default zone is set to `trusted` on SOM60, which will accept all network connections. Default zone can be changed in `$(TARGET_DIR)/etc/firewalld/firewalld.conf`.
+
+`firewall-cmd` is the command line tool of the firewalld daemon. It provides interface to manage runtime and permanent rule sets. By default, it applies to the runtime set; with the --permanent flag it applies to the permanent set. These permanent rules will be saved in corresponding xml files in /etc/firewalld/. To activate a permanent rule, either add the rule to both sets, or add the rule to the permanent set only and then reload firewalld configuration.
+```
+To start firewalld: systemctl start firewalld
+To stop firewalld: systemctl stop firewalld
+To check the firewalld status: firewall-cmd --state
+To save runtime rules as permanent: firewall-cmd --runtime-to-permanent
+To reload firewalld configuration: firewall-cmd --reload
+```
+Port forwarding
+
+If we want to access the webserver through `wlan0` interface (http service not enabled in 'external' zone), port forwarding can be used:
+
+firewall-cmd --zone=external --add-forward-port=port=80:proto=tcp:toport=80:toaddr=10.42.0.1 ('10.42.0.1' is the ip address of eth1 interface)
+
+This can be removed by
+
+firewall-cmd --zone=external --remove-forward-port=port=80:proto=tcp:toport=80:toaddr=10.42.0.1
+
+Make sure `masquerade` is enabled for the zone needs port forwarding.
+
+Rich Rules
+
+Rich Rules allows to add fully custom firewall rules to any zone for any port, protocol, address and action. `--add-rich-rule`, `--list-rich-rules` and `--remove-rich-rule` are used to manage rich rules. The following rule will reject all connections from wifi client '10.42.0.122':
+
+	firewall-cmd --zone=internal --add-rich-rule='rule family="ipv4" source address="10.42.0.122" reject'
+
+This can be removed by
+
+	firewall-cmd --zone=internal --remove-rich-rule='rule family="ipv4" source address="10.42.0.122" reject'
+
+### Firewalld example 1
+The first example is about sharing WIFI Internet (wlan0) through ethernet interface (eth1).
+```
+1. Create a connection "eth1" for ethernet interface "eth1"; create a connection "wlan0" for wifi
+   interface "wlan0". Set connection.zone for both connections:
+       nmcli c mod eth1 connection.zone internal
+       nmcli c mod wlan0 connection.zone external
+   "internal" and "external" are firewalld’s predefined zones.
+   Set ipv4.method to "shared" for "eth1" connection:
+       nmcli c mod eth1 ipv4.method shared
+   Reload connections:
+       nmcli c reload
+2. Change default firewalld zone to "internal". Changes will be applied to the default zone if "--zone" not
+   specified in the firewall-cmd tool.
+       firewall-cmd --set-default-zone=internal
+   Check the default zone is changed by
+       firewall-cmd --get-default-zone
+   Zone infomation can be listed by
+       firewall-cmd --zone=internal --list-all
+3. Add interface "wlan0" to "external" zone, and interface "eth1" to "internal" zone:
+       firewall-cmd --zone=external --add-interface=wlan0
+       firewall-cmd --zone=internal --add-interface=eth1
+       firewall-cmd --get-active-zones should show `internal` and `external` as active zones.
+4. "firewall-cmd --get-services --zone=internal" will show the services already added to the zone:
+   Here we need to enable "dhcp" service so that wifi clients can get IP address:
+       firewall-cmd --add-service=dhcp
+   DNS needs to be enabled if clients want to access webs
+       firewall-cmd --add-service=dns
+   Services can be removed by
+       firewall-cmd --remove-service=service_name --permanent
+5. For the "external" zone, "masquerade" should be already enabled. This can be queried by:
+       firewall-cmd --query-masquerade --zone=external
+   If not enabled, enable it by:
+       firewall-cmd --add-masquerade --zone=external
+7. In order to access the webserver on SOM60 via "eth1" interface, "http" servcie needs to be
+   added to the "internal" zone:
+       firewall-cmd --add-service=http
+```
+   Now clients should be able to connect to Internet via `wlan0`. You can save runtime rules as permanent so they will be applied automatically after reboot.
+
+### Firewalld example 2
+The second example is about sharing eth0 Internet through a bridge interface. Interface eth1 and wlan0 will be bridged so the device connected to eth1 and wifi stations connected to "somtouer"
+will be in the same network.
+```
+1. Create a bridge master "br-master":
+       nmcli con add type bridge con-name br-master autoconnect no ifname br0
+       nmcli con mod br-master ipv4.method shared connection.zone internal
+2. Create a wifi AP as a bridge slave:
+        nmcli conn add con-name br-slave-wlan0 ifname wlan0 type wifi autoconnect yes ssid somrouter master br0
+        nmcli conn modify br-slave-wlan0 802-11-wireless.mode ap 802-11-wireless.band bg 802-11-wireless.channel 6
+        nmcli conn modify br-slave-wlan0 802-11-wireless-security.key-mgmt wpa-psk 802-11-wireless-security.psk 12345678
+3. Create a eth1 connection as bridge slave:
+        nmcli conn add con-name br-slave-eth1 ifname eth1 type 802-3-ethernet autoconnect yes master br0
+4. Create eth0 connection for Internet access:
+        nmcli conn add con-name eth0 ifname eth0 type 802-3-ethernet autoconnect no
+        nmcli conn mod eth0 connection.zone external
+5. Set firewall rules:
+        firewall-cmd --set-default-zone=internal
+        firewall-cmd --add-service=dhcp --add-service=dns --add-service=http --add-service=https
+        firewall-cmd --add-masquerade --zone=external
+6. Activate bridge master and eth0
+        nmcli c up eth0
+        nmcli c up br-master
+```
+Make sure all other connections that use `eth1` interface and `wlan0` interface are already disconnected. Otherwise bridge slaves won't be activated.
 
 ## Laird Buildroot br2-external
 The br2-external mechanism provides a convenient way to customize project specific configure files, packages etc. outside of the Buildroot source tree. Following is an example layout of Laird Buildroot br2-external tree:
