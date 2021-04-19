@@ -63,7 +63,8 @@ linux-docs:
 	mkdir -p $(LINUX_DOCS_DST_DIR)/build $(LINUX_DOCS_DST_DIR)/images
 	rm -rf $(LINUX_DOCS_DST_DIR)/build/*
 	cp -rt $(LINUX_DOCS_DST_DIR)/build $(LINUX_DOCS_SRC_DIR)/60_series \
-		$(LINUX_DOCS_SRC_DIR)/LWB $(LINUX_DOCS_SRC_DIR)/latex_templates
+		$(LINUX_DOCS_SRC_DIR)/LWB $(LINUX_DOCS_SRC_DIR)/latex_templates \
+		$(LINUX_DOCS_SRC_DIR)/LWB $(LINUX_DOCS_SRC_DIR)/Android
 
 	$(MAKE) -C $(LINUX_DOCS_DST_DIR)/build/60_series all
 	cd $(LINUX_DOCS_DST_DIR)/build/60_series && \
@@ -79,6 +80,13 @@ linux-docs:
 		-C $(LINUX_DOCS_DST_DIR)/build/LWB \
 		--owner=root --group=root \
 		sig_LWB_series_radio.pdf
+
+	$(MAKE) -C $(LINUX_DOCS_DST_DIR)/build/Android all
+	cd $(LINUX_DOCS_DST_DIR)/build/Android && \
+	tar -cjf $(LINUX_DOCS_DST_DIR)/images/laird-android-sig-docs$(RELEASE_SUFFIX).tar.bz2 \
+		-C $(LINUX_DOCS_DST_DIR)/build/Android \
+		--owner=root --group=root \
+		*.pdf
 
 lrd-network-manager-src:
 	mkdir -p $(OUTPUT_DIR)/$@/images
