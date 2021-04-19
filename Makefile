@@ -45,11 +45,11 @@ export BR2_EXTERNAL =
 
 TARGETS_SRC_CLEAN = $(addsuffix -clean, $(TARGETS_SRC))
 
-ifneq ($(BR_DIR),)
+ifneq ($(wildcard $(BR_DIR)/board/laird/build-rules.mk),)
 include $(BR_DIR)/board/laird/build-rules.mk
-else
-OUTPUT_DIR ?= $(abspath $(MK_DIR)/../buildroot/output)
 endif
+
+OUTPUT_DIR ?= $(abspath $(MK_DIR)/../buildroot/output)
 
 all: $(TARGETS_SRC) linux-docs
 clean: $(TARGETS_SRC_CLEAN)
