@@ -79,7 +79,8 @@ linux-docs:
 	tar -cjf $(LINUX_DOCS_DST_DIR)/images/laird-sterling-lwb-docs$(RELEASE_SUFFIX).tar.bz2 \
 		-C $(LINUX_DOCS_DST_DIR)/build/LWB \
 		--owner=root --group=root \
-		sig_LWB_series_radio.pdf
+		sig_LWB_series_radio.pdf \
+		app_note_LWB_regtools.pdf
 
 	$(MAKE) -C $(LINUX_DOCS_DST_DIR)/build/Android all
 	cd $(LINUX_DOCS_DST_DIR)/build/Android && \
