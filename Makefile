@@ -15,18 +15,18 @@ TARGETS = \
 	bdimx6_rdvk \
 	som60_toolchain wb4x_toolchain
 
-TARGETS_COMPONENT_all = mfg60n \
+TARGETS_COMPONENT_all = mfg60n  regLWB5plus \
 	summit_supplicant summit_supplicant_openssl_1_0_2 \
 	adaptive_ww adaptive_ww_openssl_1_0_2 adaptive_bt
 
-TARGETS_COMPONENT_lrd = reg45n reg50n regCypress regLWB5plus \
+TARGETS_COMPONENT_lrd = reg45n reg50n regCypress \
 	summit_supplicant_legacy summit_supplicant_legacy_fips \
 	summit_supplicant_legacy_openssl_1_0_2 laird_openssl_fips
 
 TARGETS_COMPONENT = \
 	$(call MAKE_TARGETS,all) $(call MAKE_TARGETS,lrd) \
 	backports backports-test firmware \
-	regCypress-aarch64 regLWB5plus-aarch64 \
+	regCypress-aarch64 \
 	sterling_supplicant-x86 sterling_supplicant-arm \
 	summit_supplicant_fips-arm-eabihf
 
