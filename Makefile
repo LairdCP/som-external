@@ -15,7 +15,7 @@ TARGETS = \
 	bdimx6_rdvk \
 	som60_toolchain wb4x_toolchain
 
-TARGETS_COMPONENT_all = mfg60n  regLWB5plus \
+TARGETS_COMPONENT_all = mfg60n  regLWB5plus regLWBplus \
 	summit_supplicant summit_supplicant_openssl_1_0_2 \
 	adaptive_ww adaptive_ww_openssl_1_0_2 adaptive_bt
 
