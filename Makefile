@@ -14,6 +14,8 @@ TARGETS = \
 	wb50n_legacy_fips wb45n_legacy_fips \
 	wb50nsd_sysd_fips_dev wb45n_legacy_fips_dev \
 	som60sd_fips_dev som60x2sd_fips_dev \
+	wb50nsd_sysd_fips_dev_dbg wb45n_legacy_fips_dev_dbg \
+	som60sd_fips_dev_dbg som60x2sd_fips_dev_dbg \
 	ig60ll ig60llsd	ig60sd-wbx3 \
 	bdimx6 bdimx6_rdvk \
 	som60_toolchain wb4x_toolchain
