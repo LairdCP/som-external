@@ -1,4 +1,4 @@
-ARCH_all = x86 x86_64 arm-eabi arm-eabihf aarch64 powerpc64-e5500
+ARCH_all = x86 x86_64 arm-eabi arm-eabihf aarch64 powerpc64-e5500 powerpc32
 ARCH_lrd = arm-eabi arm-eabihf
 
 MAKE_TARGETS = $(foreach t,$(TARGETS_COMPONENT_$(1)), $(addprefix $(t)-,$(ARCH_$(1))))
