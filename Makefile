@@ -44,14 +44,13 @@ TARGETS_SRC = sterling_supplicant-src lrd-network-manager-src adaptive_bt-src li
 
 MK_DIR = $(realpath $(dir $(firstword $(MAKEFILE_LIST))))
 BR_DIR = $(realpath $(MK_DIR)/../buildroot)
-CONFIG_DIR = $(BR_DIR)/configs
 
 export BR2_EXTERNAL =
 
 TARGETS_SRC_CLEAN = $(addsuffix -clean, $(TARGETS_SRC))
 
-ifneq ($(wildcard $(BR_DIR)/board/laird/build-rules.mk),)
-include $(BR_DIR)/board/laird/build-rules.mk
+ifneq ($(wildcard $(BR_DIR)/../som-external/build-rules.mk),)
+include $(BR_DIR)/../som-external/build-rules.mk
 endif
 
 OUTPUT_DIR ?= $(abspath $(MK_DIR)/../buildroot/output)
