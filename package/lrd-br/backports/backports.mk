@@ -12,13 +12,13 @@ endif
 
 BACKPORTS_LICENSE = GPL-2.0
 BACKPORTS_LICENSE_FILES = COPYING
-BACKPORTS_SITE = $(TOPDIR)/package/lrd/externals/backports
+BACKPORTS_SITE = $(BR2_EXTERNAL_LRD_SOM_PATH)/package/lrd/externals/backports
 BACKPORTS_SITE_METHOD = local
 
 BP_OUT := $(BINARIES_DIR)
 BP_TREE :=  $(BP_OUT)/laird-backport-tree-$(BACKPORTS_VERSION)
 BP_TREE_WORKING :=  $(BP_OUT)/laird-backport-tree-working
-BP_LINUX_DIR :=  $(TOPDIR)/package/lrd/externals/kernel
+BP_LINUX_DIR :=  $(BR2_EXTERNAL_LRD_SOM_PATH)/package/lrd/externals/kernel
 
 define HOST_BACKPORTS_BUILD_CMDS
 	$(@D)/gentree.py --clean --copy-list $(@D)/copy-list --base-name "Summit Linux" \

@@ -1,5 +1,8 @@
 if BR2_PACKAGE_LIBOPENSSL_1_0_2
 
+config BR2_PACKAGE_PROVIDES_OPENSSL
+	default "libopenssl_1_0_2"
+
 # 4xx PowerPC cores seem to have trouble with openssl's ASM
 # optimizations
 config BR2_PACKAGE_LIBOPENSSL_TARGET_ARCH_LINUX_PPC

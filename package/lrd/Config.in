@@ -29,8 +29,8 @@ source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd/ig-tty-utils/Config.in"
 source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd/lrd-fips-utils/Config.in"
 source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd/lrd-wifi-bridge/Config.in"
 source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd/echotest/Config.in"
-source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd/lwm2m-python-client/Config.in"
 source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd/summit-firewall/Config.in"
+source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd/laird_openssl_fips-binaries/Config.in"
 
 if BR2_LRD_NO_RADIO
 source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd/lrd-radio/adaptive_bt/Config.in"

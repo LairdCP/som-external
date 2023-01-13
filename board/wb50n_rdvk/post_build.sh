@@ -56,7 +56,7 @@ done
 grep -q "/sys/kernel/debug" ${TARGET_DIR}/etc/fstab ||\
 	echo 'nodev /sys/kernel/debug   debugfs   defaults   0  0' >> ${TARGET_DIR}/etc/fstab
 
-CCONF_DIR="$(realpath ${BR2_EXTERNAL_LRD_SOM_PATH}/board/configs-common/image)"
+CCONF_DIR="$(realpath $(BR2_EXTERNAL_LRD_SOM_PATH)/board/configs-common/image)"
 
 # Generate kernel FIT image script
 # kernel.its references zImage and at91-dvk_som60.dtb, and all three

@@ -20,7 +20,7 @@ HOST_BACKPORTS_TEST_DEPENDENCIES = \
 	$(BR2_FLEX_HOST_DEPENDENCY) \
 	host-zstd
 
-BACKPORTS_TEST_TOOLDIR = $(TOPDIR)/package/lrd/externals/backports/devel
+BACKPORTS_TEST_TOOLDIR = $(BR2_EXTERNAL_LRD_SOM_PATH)/package/lrd/externals/backports/devel
 
 ifeq ($(MSD_BINARIES_SOURCE_LOCATION),laird_internal)
   BACKPORTS_TEST_SITE = https://files.devops.rfpros.com/builds/linux/backports/laird/$(BACKPORTS_TEST_VERSION)
