@@ -1,0 +1,12 @@
+config BR2_PACKAGE_LIBOPENSSL_3_0
+        bool "openssl 3.0"
+        select BR2_PACKAGE_ZLIB
+
+config BR2_PACKAGE_LIBOPENSSL_1_0_2
+        bool "openssl 1.0.2"
+        select BR2_PACKAGE_ZLIB
+
+config BR2_PACKAGE_LAIRD_OPENSSL_FIPS_BINARIES
+        bool "Laird openssl-1.0.2 (or 3.0) fips binaries"
+        select BR2_PACKAGE_ZLIB
+

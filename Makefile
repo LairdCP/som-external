@@ -44,14 +44,13 @@ TARGETS_SRC = sterling_supplicant-src lrd-network-manager-src adaptive_bt-src li
 
 MK_DIR = $(realpath $(dir $(firstword $(MAKEFILE_LIST))))
 BR_DIR = $(realpath $(MK_DIR)/../buildroot)
-CONFIG_DIR = $(BR_DIR)/configs
 
 export BR2_EXTERNAL =
 
 TARGETS_SRC_CLEAN = $(addsuffix -clean, $(TARGETS_SRC))
 
-ifneq ($(wildcard $(BR_DIR)/board/laird/build-rules.mk),)
-include $(BR_DIR)/board/laird/build-rules.mk
+ifneq ($(wildcard $(BR_DIR)/../som-external/build-rules.mk),)
+include $(BR_DIR)/../som-external/build-rules.mk
 endif
 
 OUTPUT_DIR ?= $(abspath $(MK_DIR)/../buildroot/output)
@@ -98,14 +97,14 @@ linux-docs:
 
 lrd-network-manager-src:
 	mkdir -p $(OUTPUT_DIR)/$@/images
-	tar -C $(BR_DIR)/package/lrd/externals/lrd-network-manager --exclude=.git \
+	tar -C $(BR_DIR)/../som-external/package/lrd/externals/lrd-network-manager --exclude=.git \
 		--transform "s,.,lrd-network-manager$(RELEASE_SUFFIX)," \
 		--owner=root --group=root \
 		-cJf $(OUTPUT_DIR)/$@/images/$@$(RELEASE_SUFFIX).tar.xz .
 
 sterling_supplicant-src:
 	mkdir -p $(OUTPUT_DIR)/$@/images
-	tar -C $(BR_DIR)/package/lrd/externals/sterling_supplicant --exclude=.git \
+	tar -C $(BR_DIR)/../som-external/package/lrd/externals/sterling_supplicant --exclude=.git \
 		--transform "s,^,sterling_supplicant$(RELEASE_SUFFIX)/," \
 		--owner=root --group=root \
 		-czf $(OUTPUT_DIR)/$@/images/$@$(RELEASE_SUFFIX).tar.gz \
@@ -113,7 +112,7 @@ sterling_supplicant-src:
 
 adaptive_bt-src:
 	mkdir -p $(OUTPUT_DIR)/$@/images
-	tar -C $(BR_DIR)/package/lrd/externals/adaptive_bt --exclude=.git \
+	tar -C $(BR_DIR)/../som-external/package/lrd/externals/adaptive_bt --exclude=.git \
 		--transform "s,^,adaptive_bt$(RELEASE_SUFFIX)/," \
 		--owner=root --group=root \
 		-czf $(OUTPUT_DIR)/$@/images/$@$(RELEASE_SUFFIX).tar.gz \

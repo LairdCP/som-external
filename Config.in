@@ -1,0 +1,24 @@
+menu "Laird Connectivity"
+
+	config BR2_LRD_DEVEL_BUILD
+	bool
+	option env="BR2_LRD_DEVEL_BUILD"
+	help
+	  Developers at Laird can access the closed source repositories,
+	  so they should set this flag to directly build from the closed
+	  source repositories under $BR2_EXTERNAL_LRD_CLOSED_SOURCE_PATH/package.
+
+	menu "Radio Stack"
+		source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd/lrd-radio/Config.in"
+	endmenu
+
+	menu "Packages"
+		source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd/Config.in"
+	endmenu
+
+        menu "Packages (Upstream)"
+                source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd-br/Config.in"
+                source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd-br/Config.in.host"
+        endmenu
+
+endmenu

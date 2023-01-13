@@ -1,0 +1,2 @@
+config BR2_PACKAGE_LRD_LINUX_BACKPORTS
+    bool "lrd-linux-backports"
