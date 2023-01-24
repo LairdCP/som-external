@@ -14,10 +14,24 @@ endif
 endif
 
 lrd_closed_source_name := $(realpath $(BR_DIR)/../lrd-closed-source-external)
+
+ifneq ($(lrd_closed_source_name),)
+ifneq ($(BR2_EXTERNAL),)
 BR2_EXTERNAL := $(addsuffix :$(lrd_closed_source_name),$(BR2_EXTERNAL))
+else
+BR2_EXTERNAL := $(lrd_closed_source_name)
+endif
+endif
 
 som_name := $(realpath $(BR_DIR)/../som-external)
+
+ifneq ($(som_name),)
+ifneq ($(BR2_EXTERNAL),)
 BR2_EXTERNAL := $(addsuffix :$(som_name),$(BR2_EXTERNAL))
+else
+BR2_EXTERNAL := $(som_name)
+endif
+endif
 
 export BR2_EXTERNAL
 
