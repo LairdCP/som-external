@@ -1,0 +1,3 @@
+config BR2_PACKAGE_LRD_BRCM_PATCHRAM_PLUS
+        bool "lrd-brcm-patchram-plus"
+
