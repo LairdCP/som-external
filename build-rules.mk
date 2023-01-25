@@ -2,36 +2,9 @@
 # Customer external repositories should be using this Makefile
 
 BR2_EXTERNAL ?= $(realpath $(MK_DIR))
-
-vigiles_name := $(realpath $(BR_DIR)/../vigiles-buildroot)
-
-ifneq ($(vigiles_name),)
-ifneq ($(BR2_EXTERNAL),)
-BR2_EXTERNAL := $(addsuffix :$(vigiles_name),$(BR2_EXTERNAL))
-else
-BR2_EXTERNAL := $(vigiles_name)
-endif
-endif
-
-lrd_closed_source_name := $(realpath $(BR_DIR)/../lrd-closed-source-external)
-
-ifneq ($(lrd_closed_source_name),)
-ifneq ($(BR2_EXTERNAL),)
-BR2_EXTERNAL := $(addsuffix :$(lrd_closed_source_name),$(BR2_EXTERNAL))
-else
-BR2_EXTERNAL := $(lrd_closed_source_name)
-endif
-endif
-
-som_name := $(realpath $(BR_DIR)/../som-external)
-
-ifneq ($(som_name),)
-ifneq ($(BR2_EXTERNAL),)
-BR2_EXTERNAL := $(addsuffix :$(som_name),$(BR2_EXTERNAL))
-else
-BR2_EXTERNAL := $(som_name)
-endif
-endif
+BR2_EXTERNAL += $(realpath $(BR_DIR)/../vigiles-buildroot) \
+	$(realpath $(BR_DIR)/../som-external) \
+	$(realpath $(BR_DIR)/../lrd-closed-source-external)
 
 export BR2_EXTERNAL
 
