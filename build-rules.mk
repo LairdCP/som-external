@@ -1,8 +1,10 @@
 # Generic Make engine for customer builds
 # Customer external repositories should be using this Makefile
 
+vigiles_name := $(realpath $(BR_DIR)/../vigiles-buildroot)
+
 BR2_EXTERNAL ?= $(realpath $(MK_DIR))
-BR2_EXTERNAL += $(realpath $(BR_DIR)/../vigiles-buildroot) \
+BR2_EXTERNAL += $(vigiles_name) \
 	$(realpath $(BR_DIR)/../som-external) \
 	$(realpath $(BR_DIR)/../lrd-closed-source-external)
 
