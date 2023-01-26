@@ -45,7 +45,7 @@ LIBOPENSSL_1_0_2_IGNORE_CVES += CVE-2022-2068
 ifeq ($(BR2_PACKAGE_LAIRD_OPENSSL_FIPS),y)
 # building from closed source git repository
 LIBOPENSSL_1_0_2_VERSION = local
-LIBOPENSSL_1_0_2_SITE = $(BR2_EXTERNAL_LRD_SOM_PATH)/package/lrd-closed-source/externals/lairdssl_1_0_2
+LIBOPENSSL_1_0_2_SITE = $(BR2_EXTERNAL_LRD_CLOSED_SOURCE_PATH)/package/externals/lairdssl_1_0_2
 LIBOPENSSL_1_0_2_SITE_METHOD = local
 else
 LIBOPENSSL_1_0_2_VERSION = 1.0.2u
