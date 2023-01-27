@@ -1,18 +1,6 @@
 comment "linux-backports needs a Linux kernel to be built"
 	depends on !BR2_LINUX_KERNEL
 
-config BR2_PACKAGE_PROVIDES_LINUX_BACKPORTS
-	default "lrd-linux-backports" if BR2_PACKAGE_LRD_LINUX_BACKPORTS
-	depends on BR2_LINUX_KERNEL
-	help
-	  The linux-backports package includes many Linux drivers from
-	  recent kernels, backported to older ones.
-
-	  This version of linux-backports supports kernels starting
-	  from 3.10.
-
-	  https://backports.wiki.kernel.org
-
 if BR2_PACKAGE_LRD_LINUX_BACKPORTS
 
 choice
@@ -26,6 +14,10 @@ config BR2_PACKAGE_LRD_LINUX_BACKPORTS_USE_CUSTOM_CONFIG
 	bool "Using a custom (def)config file"
 
 endchoice
+
+config BR2_PACKAGE_PROVIDES_LINUX_BACKPORTS
+	default "lrd-linux-backports" if BR2_PACKAGE_LRD_LINUX_BACKPORTS
+	depends on BR2_LINUX_KERNEL
 
 config BR2_PACKAGE_LRD_LINUX_BACKPORTS_VERSION_VALUE
 	string "backports version"
