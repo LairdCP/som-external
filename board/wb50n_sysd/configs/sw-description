@@ -247,18 +247,18 @@ software =
 					sha256 = "@u-boot.itb.sha256";
 				},
 				{
-					filename = "u-boot.env.gz";
+					filename = "uboot.env.gz";
 					mtdname = "u-boot-env-a";
 					type="flash";
 					compressed = "zlib";
-					sha256 = "@u-boot.env.gz.sha256";
+					sha256 = "@uboot.env.gz.sha256";
 				},
 				{
-					filename = "u-boot.env.gz";
+					filename = "uboot.env.gz";
 					mtdname = "u-boot-env-b";
 					type="flash";
 					compressed = "zlib";
-					sha256 = "@u-boot.env.gz.sha256";
+					sha256 = "@uboot.env.gz.sha256";
 				},
 				{
 					filename = "kernel.itb";

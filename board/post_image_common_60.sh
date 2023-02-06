@@ -74,7 +74,6 @@ if ${SD} ; then
 ${mkenvimage} -p 0 -s 131072 -o ${BINARIES_DIR}/uboot.env ${BINARIES_DIR}/u-boot-default.env
 else
 ${mkenvimage} -r -s 131072 -o ${BINARIES_DIR}/uboot.env ${BINARIES_DIR}/u-boot-default.env
-gzip -9 ${BINARIES_DIR}/uboot.env
 fi
 
 # swupdate will reject an SWU file with sw-description containing hashes unless
@@ -137,7 +136,7 @@ if ! ${SD} ; then
 		tar -C ${BINARIES_DIR} -rhf ${RELEASE_FILE} \
 			--owner=0 --group=0 --numeric-owner \
 			pmecc.bin u-boot-spl.dtb u-boot-spl-nodtb.bin u-boot.dtb \
-			u-boot-nodtb.bin u-boot.its u-boot.scr.itb uboot.env.gz \
+			u-boot-nodtb.bin u-boot.its u-boot.scr.itb uboot.env \
 			Image.gz "${DTB}" boot.scr kernel.its \
 			sw-description rootfs.verity erase_data.sh
 
