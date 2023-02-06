@@ -89,7 +89,7 @@ else
 	sign_method="rawrsa"
 fi
 
-ALL_SWU_FILES="sw-description boot.bin u-boot.itb uboot.env.gz kernel.itb rootfs.bin erase_data.sh"
+ALL_SWU_FILES="sw-description boot.bin u-boot.itb uboot.env kernel.itb rootfs.bin erase_data.sh"
 
 if ! ${ENCRYPTED_TOOLKIT} ; then
 	# Generate non-secured artifacts
