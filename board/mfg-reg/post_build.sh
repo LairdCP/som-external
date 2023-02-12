@@ -5,6 +5,12 @@ BR2_LRD_PRODUCT="$(sed -n 's,^BR2_DEFCONFIG=".*/\(.*\)_defconfig"$,\1,p' ${BR2_C
 
 echo "${BR2_LRD_PRODUCT^^} POST BUILD script: starting..."
 
+LIBEDIT=$(readlink $TARGET_DIR/usr/lib/libedit.so)
+LIBEDITLRD=${LIBEDIT/libedit./libedit.lrd.}
+
+LIBNCURSES=$(readlink $TARGET_DIR/usr/lib/libncurses.so)
+LIBNCURSESLRD=${LIBNCURSES/libncurses./libncurses.lrd.}
+
 if [[ "${BR2_LRD_PRODUCT}" == mfg60* ]]; then
 NL=$'\n'
 MANIFEST_FILES=
@@ -25,10 +31,13 @@ MANIFEST_FILES="${MANIFEST_FILES}${NL}/usr/bin/btlru"
 fi
 
 if [ -f ${TARGET_DIR}/usr/lib/libedit.so ]; then
-LIBEDIT=$(readlink $TARGET_DIR/usr/lib/libedit.so)
-LIBEDITLRD=${LIBEDIT/libedit./libedit.lrd.}
 MANIFEST_FILES="${MANIFEST_FILES}${NL}/usr/lib/${LIBEDITLRD}"
 cp "${TARGET_DIR}/usr/lib/${LIBEDIT}" "${TARGET_DIR}/usr/lib/${LIBEDITLRD}"
+fi
+
+if [ -f ${TARGET_DIR}/usr/lib/libncurses.so ]; then
+MANIFEST_FILES="${MANIFEST_FILES}${NL}/usr/lib/${LIBNCURSESLRD}"
+cp "${TARGET_DIR}/usr/lib/${LIBNCURSES}" "${TARGET_DIR}/usr/lib/${LIBNCURSESLRD}"
 fi
 
 echo "${MANIFEST_FILES}" \
@@ -39,13 +48,11 @@ ls "${TARGET_DIR}/lib/firmware/lrdmwl/88W8997_mfg_"* | sed "s,^${TARGET_DIR},," 
 
 elif [[ "${BR2_LRD_PRODUCT}" == reg50* ]] || [[ "${BR2_LRD_PRODUCT}" == reg45* ]]; then
 
-LIBEDIT=$(readlink $TARGET_DIR/usr/lib/libedit.so)
-LIBEDITLRD=${LIBEDIT/libedit./libedit.lrd.}
-
 echo "/usr/bin/lru
 /usr/sbin/smu_cli
 /usr/bin/tcmd.sh
-/usr/lib/${LIBEDITLRD}" \
+/usr/lib/${LIBEDITLRD}
+/usr/lib/${LIBNCURSESLRD}" \
 > "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
 
 if [[ "${BR2_LRD_PRODUCT}" == reg50* ]]; then
@@ -57,6 +64,7 @@ ls "${TARGET_DIR}/lib/firmware/ath6k/AR6003/hw2.1.1/athtcmd"* | sed "s,^${TARGET
 fi
 
 cp "${TARGET_DIR}/usr/lib/${LIBEDIT}" "${TARGET_DIR}/usr/lib/${LIBEDITLRD}"
+cp "${TARGET_DIR}/usr/lib/${LIBNCURSES}" "${TARGET_DIR}/usr/lib/${LIBNCURSESLRD}"
 
 # move tcmd.sh into package and add to manifest
 cp ${BR2_EXTERNAL_LRD_SOM_PATH}/board/mfg-reg/rootfs-additions/tcmd.sh ${TARGET_DIR}/usr/bin
@@ -73,47 +81,46 @@ ls "${TARGET_DIR}/lib/firmware/brcm/brcmfmac43430-sdio-mfg_"*".bin" | sed "s,^${
 
 elif [[ "${BR2_LRD_PRODUCT}" == regLWB5plus* ]]; then
 
-LIBEDIT=$(readlink $TARGET_DIR/usr/lib/libedit.so)
-LIBEDITLRD=${LIBEDIT/libedit./libedit.lrd.}
-
 echo "/usr/bin/lru
 /usr/bin/btlru
 /lib/firmware/brcm/brcmfmac4373-div-mfg.txt
-/usr/lib/${LIBEDITLRD}" \
+/usr/lib/${LIBEDITLRD}
+/usr/lib/${LIBNCURSESLRD}" \
 > "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
 
 ls "${TARGET_DIR}/lib/firmware/brcm/brcmfmac4373-"*"-mfg_"*".bin" | sed "s,^${TARGET_DIR},," \
 	>> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
 
 cp "${TARGET_DIR}/usr/lib/${LIBEDIT}" "${TARGET_DIR}/usr/lib/${LIBEDITLRD}"
+cp "${TARGET_DIR}/usr/lib/${LIBNCURSES}" "${TARGET_DIR}/usr/lib/${LIBNCURSESLRD}"
 
 elif [[ "${BR2_LRD_PRODUCT}" == regLWBplus* ]]; then
-LIBEDIT=$(readlink $TARGET_DIR/usr/lib/libedit.so)
-LIBEDITLRD=${LIBEDIT/libedit./libedit.lrd.}
 
 echo "/usr/bin/lru
 /usr/bin/btlru
-/usr/lib/${LIBEDITLRD}" \
+/usr/lib/${LIBEDITLRD}
+/usr/lib/${LIBNCURSESLRD}" \
 > "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
 
 ls "${TARGET_DIR}/lib/firmware/brcm/brcmfmac43439-sdio-mfg_"*".bin" | sed "s,^${TARGET_DIR},," \
 	>> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
 
 cp "${TARGET_DIR}/usr/lib/${LIBEDIT}" "${TARGET_DIR}/usr/lib/${LIBEDITLRD}"
+cp "${TARGET_DIR}/usr/lib/${LIBNCURSES}" "${TARGET_DIR}/usr/lib/${LIBNCURSESLRD}"
 
 elif [[ "${BR2_LRD_PRODUCT}" == regLWB6* ]]; then
-LIBEDIT=$(readlink $TARGET_DIR/usr/lib/libedit.so)
-LIBEDITLRD=${LIBEDIT/libedit./libedit.lrd.}
 
 echo "/usr/bin/lru
 /usr/bin/btlru
-/usr/lib/${LIBEDITLRD}" \
+/usr/lib/${LIBEDITLRD}
+/usr/lib/${LIBNCURSESLRD}" \
 > "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
 
 ls "${TARGET_DIR}/lib/firmware/cypress/cyfmac55572-"*"-mfg_"*".trxse" | sed "s,^${TARGET_DIR},," \
 	>> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
 
 cp "${TARGET_DIR}/usr/lib/${LIBEDIT}" "${TARGET_DIR}/usr/lib/${LIBEDITLRD}"
+cp "${TARGET_DIR}/usr/lib/${LIBNCURSES}" "${TARGET_DIR}/usr/lib/${LIBNCURSESLRD}"
 
 else
 exit 1
