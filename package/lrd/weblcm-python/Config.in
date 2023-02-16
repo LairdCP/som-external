@@ -123,4 +123,9 @@ config BR2_PACKAGE_WEBLCM_PYTHON_IPTABLES_FIREWALL
 	help
 		Enable iptables firewall wrapper
 
+config BR2_PACKAGE_WEBLCM_PYTHON_RADIO_SISO_MODE
+	bool "Allow changing radio's SISO mode"
+	help
+		Enable support for temporarily changing the radio's SISO mode (for testing purposes only)
+
 endif
