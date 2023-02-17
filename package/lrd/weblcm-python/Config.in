@@ -128,4 +128,11 @@ config BR2_PACKAGE_WEBLCM_PYTHON_RADIO_SISO_MODE
 	help
 		Enable support for temporarily changing the radio's SISO mode (for testing purposes only)
 
+config BR2_PACKAGE_WEBLCM_PYTHON_CHRONY_NTP
+	bool "chrony NTP control"
+	depends on BR2_PACKAGE_CHRONY
+	default y
+	help
+		Enable chrony wrapper for NTP configuration
+
 endif
