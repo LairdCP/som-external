@@ -64,7 +64,6 @@ LRD_LINUX_BACKPORTS_MAKE_OPTS = \
 	YACC=bison \
 	BACKPORT_DIR=$(@D) \
 	KLIB_BUILD=$(LINUX_DIR) \
-	INSTALL_MOD_DIR=backports \
 	KLIB=$(TARGET_DIR)/lib/modules/$(LINUX_VERSION_PROBED) \
 	`sed -r -e '/^\#/d;' $(@D)/.config`
 
