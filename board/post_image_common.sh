@@ -64,7 +64,7 @@ ln -rsf "${BINARIES_DIR}/uImage"* "${BINARIES_DIR}/kernel.bin"
 fi
 
 ln -rsf ${BR2_EXTERNAL_LRD_SOM_PATH}/board/rootfs-additions-common/usr/sbin/fw_select "${BINARIES_DIR}/fw_select"
-ln -rsf ${BR2_EXTERNAL_LRD_SOM_PATH}/board/rootfs-additions-common/usr/sbin/fw_update "${BINARIES_DIR}/fw_update"
+ln -rsf "${TARGET_DIR}"/usr/sbin/fw_update "${BINARIES_DIR}/fw_update"
 ln -rsf "${BINARIES_DIR}/boot.bin" "${BINARIES_DIR}/at91bs.bin"
 ln -rsf "${BINARIES_DIR}/rootfs.ubi" "${BINARIES_DIR}/rootfs.bin"
 
