@@ -129,7 +129,7 @@ define LIBOPENSSL_1_0_2_CONFIGURE_CMDS
 			$(if $(BR2_STATIC_LIBS),no-shared,shared) \
 			enable-camellia \
 			enable-tlsext \
-			$(if $(BR2_PACKAGE_LIBOPENSSL_ENABLE_RC5),,no-rc5) \
+			no-rc5 \
 			$(if $(BR2_PACKAGE_LIBOPENSSL_ENABLE_RC2),,no-rc2) \
 			$(if $(BR2_PACKAGE_LIBOPENSSL_ENABLE_RC4),,no-rc4) \
 			$(if $(BR2_PACKAGE_LIBOPENSSL_ENABLE_MD2),,no-md2) \
