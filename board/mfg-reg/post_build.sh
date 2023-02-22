@@ -8,136 +8,106 @@ echo "${BR2_LRD_PRODUCT^^} POST BUILD script: starting..."
 if [ -f ${TARGET_DIR}/usr/lib/libedit.so ]; then
 LIBEDIT=$(readlink ${TARGET_DIR}/usr/lib/libedit.so)
 LIBEDITLRD=${LIBEDIT/libedit./libedit.lrd.}
+cp "${TARGET_DIR}/usr/lib/${LIBEDIT}" "${TARGET_DIR}/usr/lib/${LIBEDITLRD}"
 fi
 
 if [ -f ${TARGET_DIR}/usr/lib/libncurses.so ]; then
 LIBNCURSES=$(readlink ${TARGET_DIR}/usr/lib/libncurses.so)
 LIBNCURSESLRD=${LIBNCURSES/libncurses./libncurses.lrd.}
+cp "${TARGET_DIR}/usr/lib/${LIBNCURSES}" "${TARGET_DIR}/usr/lib/${LIBNCURSESLRD}"
 fi
+
+add_file() {
+	for var in "${@}"; do
+		[ -f "${TARGET_DIR}${var}" ] && \
+			echo ${var} >> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
+	done
+}
+
+add_firmware() {
+	add_file $(ls ${1} | sed "s,^${TARGET_DIR},,")
+}
+
+rm -f ${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest
 
 case "${BR2_LRD_PRODUCT}" in
 mfg60*)
-	NL=$'\n'
-	MANIFEST_FILES=
-
 	#lrt and other vendor mfg tools are mutually exclusive
 	[ -f ${TARGET_DIR}/usr/bin/lrt ] &&  exit 0
 
-	if [ -f ${TARGET_DIR}/usr/bin/lmu ]; then
-	MANIFEST_FILES="${MANIFEST_FILES}${NL}/usr/bin/lmu"
-	fi
+	add_file \
+		/usr/bin/lmu \
+		/usr/bin/lru \
+		/usr/bin/btlru \
+		/usr/lib/${LIBEDITLRD} \
+		/usr/lib/${LIBNCURSESLRD}
 
-	if [ -f ${TARGET_DIR}/usr/bin/lru ]; then
-	MANIFEST_FILES="${MANIFEST_FILES}${NL}/usr/bin/lru"
-	fi
-
-	if [ -f ${TARGET_DIR}/usr/bin/btlru ]; then
-	MANIFEST_FILES="${MANIFEST_FILES}${NL}/usr/bin/btlru"
-	fi
-
-	if [ -f ${TARGET_DIR}/usr/lib/libedit.so ]; then
-	MANIFEST_FILES="${MANIFEST_FILES}${NL}/usr/lib/${LIBEDITLRD}"
-	cp "${TARGET_DIR}/usr/lib/${LIBEDIT}" "${TARGET_DIR}/usr/lib/${LIBEDITLRD}"
-	fi
-
-	if [ -f ${TARGET_DIR}/usr/lib/libncurses.so ]; then
-	MANIFEST_FILES="${MANIFEST_FILES}${NL}/usr/lib/${LIBNCURSESLRD}"
-	cp "${TARGET_DIR}/usr/lib/${LIBNCURSES}" "${TARGET_DIR}/usr/lib/${LIBNCURSESLRD}"
-	fi
-
-	echo "${MANIFEST_FILES}" \
-	> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
-
-	ls "${TARGET_DIR}/lib/firmware/lrdmwl/88W8997_mfg_"* | sed "s,^${TARGET_DIR},," \
-		>> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
+	add_firmware  "${TARGET_DIR}/lib/firmware/lrdmwl/88W8997_mfg_*"
 	;;
 
 reg45*)
-	echo "/usr/bin/lru
-	/usr/sbin/smu_cli
-	/usr/bin/tcmd.sh
-	/usr/lib/${LIBEDITLRD}
-	/usr/lib/${LIBNCURSESLRD}" \
-	> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
+	add_file \
+		/usr/bin/lru \
+		/usr/sbin/smu_cli \
+		/usr/bin/tcmd.sh \
+		/usr/lib/${LIBEDITLRD} \
+		/usr/lib/${LIBNCURSESLRD}
 
-	ls "${TARGET_DIR}/lib/firmware/ath6k/AR6003/hw2.1.1/athtcmd"* | sed "s,^${TARGET_DIR},," \
-		>> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
-
-	cp "${TARGET_DIR}/usr/lib/${LIBEDIT}" "${TARGET_DIR}/usr/lib/${LIBEDITLRD}"
-	cp "${TARGET_DIR}/usr/lib/${LIBNCURSES}" "${TARGET_DIR}/usr/lib/${LIBNCURSESLRD}"
+	add_firmware "${TARGET_DIR}/lib/firmware/ath6k/AR6003/hw2.1.1/athtcmd*"
 
 	# move tcmd.sh into package and add to manifest
 	cp ${BR2_EXTERNAL_LRD_SOM_PATH}/board/mfg-reg/rootfs-additions/tcmd.sh ${TARGET_DIR}/usr/bin
 	;;
 
 reg50*)
-	echo "/usr/bin/lru
-	/usr/sbin/smu_cli
-	/usr/bin/tcmd.sh
-	/usr/lib/${LIBEDITLRD}
-	/usr/lib/${LIBNCURSESLRD}" \
-	> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
+	add_file \
+		/usr/bin/lru \
+		/usr/sbin/smu_cli \
+		/usr/bin/tcmd.sh \
+		/usr/lib/${LIBEDITLRD} \
+		/usr/lib/${LIBNCURSESLRD}
 
-	ls "${TARGET_DIR}/lib/firmware/ath6k/AR6004/hw3.0/utf"* | sed "s,^${TARGET_DIR},," \
-		>> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
-
-	cp "${TARGET_DIR}/usr/lib/${LIBEDIT}" "${TARGET_DIR}/usr/lib/${LIBEDITLRD}"
-	cp "${TARGET_DIR}/usr/lib/${LIBNCURSES}" "${TARGET_DIR}/usr/lib/${LIBNCURSESLRD}"
+	add_firmware "${TARGET_DIR}/lib/firmware/ath6k/AR6004/hw3.0/utf*"
 
 	# move tcmd.sh into package and add to manifest
 	cp ${BR2_EXTERNAL_LRD_SOM_PATH}/board/mfg-reg/rootfs-additions/tcmd.sh ${TARGET_DIR}/usr/bin
 	;;
 
 regCypress*)
-	echo "/usr/bin/wl" > "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
-
-	ls "${TARGET_DIR}/lib/firmware/brcm/brcmfmac4339-sdio-mfg_"*".bin" | sed "s,^${TARGET_DIR},," \
-		>> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
-	ls "${TARGET_DIR}/lib/firmware/brcm/brcmfmac43430-sdio-mfg_"*".bin" | sed "s,^${TARGET_DIR},," \
-		>> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
+	add_file /usr/bin/wl
+	add_firmware "${TARGET_DIR}/lib/firmware/brcm/brcmfmac4339-sdio-mfg_*.bin"
+	add_firmware "${TARGET_DIR}/lib/firmware/brcm/brcmfmac43430-sdio-mfg_*.bin"
 	;;
 
 regLWB5plus*)
-	echo "/usr/bin/lru
-	/usr/bin/btlru
-	/lib/firmware/brcm/brcmfmac4373-div-mfg.txt
-	/usr/lib/${LIBEDITLRD}
-	/usr/lib/${LIBNCURSESLRD}" \
-	> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
+	add_file \
+		/usr/bin/lru \
+		/usr/bin/btlru \
+		/lib/firmware/brcm/brcmfmac4373-div-mfg.txt \
+		/usr/lib/${LIBEDITLRD} \
+		/usr/lib/${LIBNCURSESLRD}
 
-	ls "${TARGET_DIR}/lib/firmware/brcm/brcmfmac4373-"*"-mfg_"*".bin" | sed "s,^${TARGET_DIR},," \
-		>> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
-
-	cp "${TARGET_DIR}/usr/lib/${LIBEDIT}" "${TARGET_DIR}/usr/lib/${LIBEDITLRD}"
-	cp "${TARGET_DIR}/usr/lib/${LIBNCURSES}" "${TARGET_DIR}/usr/lib/${LIBNCURSESLRD}"
+	add_firmware "${TARGET_DIR}/lib/firmware/brcm/brcmfmac4373-*-mfg_*.bin"
 	;;
 
 regLWBplus*)
-	echo "/usr/bin/lru
-	/usr/bin/btlru
-	/usr/lib/${LIBEDITLRD}
-	/usr/lib/${LIBNCURSESLRD}" \
-	> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
+	add_file \
+		/usr/bin/lru \
+		/usr/bin/btlru \
+		/usr/lib/${LIBEDITLRD} \
+		/usr/lib/${LIBNCURSESLRD}
 
-	ls "${TARGET_DIR}/lib/firmware/brcm/brcmfmac43439-sdio-mfg_"*".bin" | sed "s,^${TARGET_DIR},," \
-		>> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
-
-	cp "${TARGET_DIR}/usr/lib/${LIBEDIT}" "${TARGET_DIR}/usr/lib/${LIBEDITLRD}"
-	cp "${TARGET_DIR}/usr/lib/${LIBNCURSES}" "${TARGET_DIR}/usr/lib/${LIBNCURSESLRD}"
+	add_firmware "${TARGET_DIR}/lib/firmware/brcm/brcmfmac43439-sdio-mfg_*.bin"
 	;;
 
 regLWB6*)
-	echo "/usr/bin/lru
-	/usr/bin/btlru
-	/usr/lib/${LIBEDITLRD}
-	/usr/lib/${LIBNCURSESLRD}" \
-	> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
+	add_file \
+		/usr/bin/lru \
+		/usr/bin/btlru \
+		/usr/lib/${LIBEDITLRD} \
+		/usr/lib/${LIBNCURSESLRD}
 
-	ls "${TARGET_DIR}/lib/firmware/cypress/cyfmac55572-"*"-mfg_"*".trxse" | sed "s,^${TARGET_DIR},," \
-		>> "${TARGET_DIR}/${BR2_LRD_PRODUCT}.manifest"
-
-	cp "${TARGET_DIR}/usr/lib/${LIBEDIT}" "${TARGET_DIR}/usr/lib/${LIBEDITLRD}"
-	cp "${TARGET_DIR}/usr/lib/${LIBNCURSES}" "${TARGET_DIR}/usr/lib/${LIBNCURSESLRD}"
+	add_firmware "${TARGET_DIR}/lib/firmware/cypress/cyfmac55572-*-mfg_*.trxse"
 	;;
 
 *)
