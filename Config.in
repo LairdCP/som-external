@@ -16,9 +16,12 @@ menu "Laird Connectivity"
 		source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd/Config.in"
 	endmenu
 
-        menu "Packages (Upstream)"
-                source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd-br/Config.in"
-                source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd-br/Config.in.host"
-        endmenu
+	menu "Packages (Upstream)"
+		source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd-br/Config.in"
+		source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd-br/Config.in.host"
+	endmenu
 
 endmenu
+
+source "$BR2_EXTERNAL_LRD_SOM_PATH/toolchain/toolchain-external-laird-arm/Config.in.options"
+source "$BR2_EXTERNAL_LRD_SOM_PATH/toolchain/toolchain-external-laird-component/Config.in.options"
