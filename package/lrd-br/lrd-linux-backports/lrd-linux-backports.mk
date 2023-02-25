@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-ifneq ($(BR2_PACKAGE_LRD_LINUX_BACKPORTS_VERSION),)
+ifneq ($(BR2_PACKAGE_LINUX_BACKPORTS_VERSION),)
 LRD_LINUX_BACKPORTS_VERSION = $(call qstrip,$(BR2_PACKAGE_LINUX_BACKPORTS_VERSION))
 else ifneq ($(BR2_LRD_DEVEL_BUILD),)
 LRD_LINUX_BACKPORTS_VERSION = 0.$(BR2_LRD_BRANCH).0.0
