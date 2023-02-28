@@ -53,7 +53,7 @@ stop() {
 
 # Note: invocation is start [conf]
 # The config file can be a symlink or passed-in.
-lighttpd_conf=${2:-/etc/lighttpd/lighttpd.conf}
+lighttpd_conf=${2:-/etc/lighttpd/lighttpd-weblcm.conf}
 
 case $1 in
   stop)
