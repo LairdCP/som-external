@@ -16,14 +16,8 @@ else
 	EVENTMON_DEPENDENCIES = sdcsdk
 endif
 
-EVENTMON_MAKE_ENV = CC="$(TARGET_CC)" \
-                    CXX="$(TARGET_CXX)" \
-                    ARCH="$(KERNEL_ARCH)" \
-                    CFLAGS="$(TARGET_CFLAGS)"
-
 define EVENTMON_BUILD_CMDS
-	$(MAKE) -C $(@D) clean
-	$(EVENTMON_MAKE_ENV) $(MAKE) -C $(@D)
+	$(TARGET_MAKE_ENV) $(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)
 endef
 
 define EVENTMON_INSTALL_TARGET_CMDS
