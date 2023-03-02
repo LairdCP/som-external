@@ -15,6 +15,7 @@
 	images {
 		kernel {
 			description = "Summit Linux Kernel";
+			summit-version = "";
 			data = /incbin/("Image.gz");
 			type = "kernel";
 			arch = "arm";

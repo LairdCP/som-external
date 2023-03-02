@@ -135,7 +135,7 @@ gzip -c ${TARGET_DIR}/etc/network/interfaces >${TARGET_DIR}/etc/network/interfac
 # This may be overwritten by a proper release file.
 LOCRELSTR="${LAIRD_RELEASE_STRING}"
 if [ -z "${LOCRELSTR}" ] || [ "${LOCRELSTR}" == "0.0.0.0" ]; then
-	LOCRELSTR="Summit Linux development build 0.${BR2_LRD_BRANCH}.0.0 $(/bin/date +%Y%m%d)"
+	LOCRELSTR="Summit Linux development build 0.${BR2_LRD_BRANCH}.0.0-$(/bin/date +%Y%m%d%H%M)"
 fi
 echo "${LOCRELSTR}" > "${TARGET_DIR}/etc/issue"
 
@@ -174,6 +174,9 @@ if [ ${EXT} != gz ]; then
 	sed "s/gzip/${EXT}/g" -i ${BINARIES_DIR}/kernel.its
 fi
 
+kver=$(grep -aom 1 'Linux version [0-9.]\+' ${BINARIES_DIR}/Image)
+kver="${kver##* }"
+sed "s/summit-version = \"\"/summit-version = \"Linux-${kver}-${LOCVER}\"/g" -i ${BINARIES_DIR}/kernel.its
 fi
 
 if grep -q 'BR2_DEFCONFIG=.*_fips_dev_.*' ${BR2_CONFIG}; then
