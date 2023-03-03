@@ -526,13 +526,13 @@ case $1 in
           && echo -e "\nu-boot: (defaults)\n`sed -n '2,$p' /tmp/u-boot`\n"
         echo restoring...
         bootcmd=$( sed -n "1,/^bootcmd/s/bootcmd=\(.*\)/\1/p" /tmp/u-boot )
-        $fw_setenv bootcmd $bootcmd && echo "  bootcmd"
+        $fw_setenv bootcmd "$bootcmd" && echo "  bootcmd"
         bootargs=$( sed -n "1,/^bootargs/s/bootargs=\(.*\)/\1/p" /tmp/u-boot )
         $fw_setenv bootargs "$bootargs" && echo "  bootargs"
-        for x in `echo $bootcmd |sed -n 's/.*run \(.*\);.*/\1/p'`
+        for x in `echo "$bootcmd" |sed -n 's/.*run \(.*\);.*/\1/p'`
         do
           # set any dependent variables too
-          $fw_setenv $x $( sed -n "1,/^$x/s/$x=\(.*\)/\1/p" /tmp/u-boot ) \
+          $fw_setenv $x "$( sed -n "1,/^$x/s/$x=\(.*\)/\1/p" /tmp/u-boot )" \
           && echo "  $x"
         done
         rm -f /tmp/u-boot
@@ -615,9 +615,8 @@ case $1 in
     if [ "rootfs" == "${1:0:6}" ] || [ "-a" == "${1}" ]
     then
       let mtd=$RIP+0
-      bootargs=$( $fw_printenv -n bootargs |sed "s/ubi.mtd=./ubi.mtd=$mtd/" )
-      $fw_setenv bootargs "$bootargs" \
-        && echo set rootfs-a
+      bootargs=$($fw_printenv -n bootargs |sed "s/ubi.mtd=./ubi.mtd=$mtd/")
+      $fw_setenv bootargs "$bootargs" && echo set rootfs-a
       switch_bootargs $2
     fi
     ;;
@@ -635,8 +634,7 @@ case $1 in
     then
       let mtd=$RIP+1
       bootargs=$( $fw_printenv -n bootargs |sed "s/ubi.mtd=./ubi.mtd=$mtd/" )
-      $fw_setenv bootargs "$bootargs" \
-        && echo set rootfs-b
+      $fw_setenv bootargs "$bootargs" && echo set rootfs-b
       switch_bootargs $2
     fi
     ;;
