@@ -38,7 +38,7 @@ TARGETS_COMPONENT_all = mfg60n regLWB \
 TARGETS_COMPONENT_lrd = reg45n reg50n regCypress \
 	summit_supplicant_legacy summit_supplicant_legacy_fips \
 	summit_supplicant_legacy_openssl_1_0_2 laird_openssl_fips \
-	summit_supplicant_legacy_openssl_3_0
+	summit_supplicant_legacy_openssl_3_0 laird_openssl_3_0_fips
 
 TARGETS_COMPONENT = \
 	$(call MAKE_TARGETS,all) $(call MAKE_TARGETS,lrd) \

@@ -1,6 +1,4 @@
 source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd-br/tlsdate/Config.in"
-source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd-br/libopenssl_1_0_2/Config.in"
-source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd-br/libopenssl_3_0/Config.in"
 source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd-br/microxml/Config.in"
 source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd-br/minehunt/Config.in"
 source "$BR2_EXTERNAL_LRD_SOM_PATH/package/lrd-br/nginx-unit/Config.in"
