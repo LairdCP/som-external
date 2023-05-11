@@ -35,7 +35,7 @@ TARGETS_COMPONENT_all = mfg60n regLWB \
 	summit_supplicant_openssl_3_0 \
 	adaptive_ww adaptive_bt
 
-TARGETS_COMPONENT_lrd = reg45n reg50n regCypress \
+TARGETS_COMPONENT_lrd = reg45n reg50n \
 	summit_supplicant_legacy summit_supplicant_legacy_fips \
 	summit_supplicant_legacy_openssl_1_0_2 laird_openssl_fips \
 	summit_supplicant_legacy_openssl_3_0 laird_openssl_3_0_fips
@@ -43,7 +43,6 @@ TARGETS_COMPONENT_lrd = reg45n reg50n regCypress \
 TARGETS_COMPONENT = \
 	$(call MAKE_TARGETS,all) $(call MAKE_TARGETS,lrd) \
 	backports backports-test firmware \
-	regCypress-aarch64 \
 	sterling_supplicant-x86 sterling_supplicant-arm \
 	summit_supplicant_fips-arm-eabihf
 
