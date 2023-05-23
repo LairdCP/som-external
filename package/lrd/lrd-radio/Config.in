@@ -7,7 +7,9 @@ choice
 	config BR2_LRD_SOM60_RADIO
 		bool "SOM60 Radio"
 		select BR2_PACKAGE_SOM60_FIRMWARE_BINARIES
-		select BR2_PACKAGE_SUMMIT_SUPPLICANT_BINARIES
+		select BR2_PACKAGE_SDCSUPP
+		select BR2_PACKAGE_SDCSUPP_WPA_CLI
+		select BR2_PACKAGE_SDCSUPP_WPA_PASSPHRASE
 		select BR2_PACKAGE_LRD_LINUX_BACKPORTS
 		select BR2_PACKAGE_ADAPTIVE_WW_BINARIES
 		select BR2_PACKAGE_LRD_NETWORK_MANAGER
@@ -16,21 +18,23 @@ choice
 	config BR2_LRD_WB50N_SYSD_RADIO
 		bool "WB50N SYSD Radio"
 		select BR2_PACKAGE_WB50N_FIRMWARE_BINARIES
-		select BR2_PACKAGE_SUMMIT_SUPPLICANT_BINARIES
+		select BR2_PACKAGE_SDCSUPP
+		select BR2_PACKAGE_SDCSUPP_WPA_CLI
+		select BR2_PACKAGE_SDCSUPP_WPA_PASSPHRASE
 		select BR2_PACKAGE_LRD_LINUX_BACKPORTS
 		select BR2_PACKAGE_LRD_NETWORK_MANAGER
 
 	config BR2_LRD_WB50N_LEGACY_RADIO
 		bool "WB50N Legacy Radio"
 		select BR2_PACKAGE_WB50N_FIRMWARE_BINARIES
-		select BR2_PACKAGE_SUMMIT_SUPPLICANT_BINARIES
+		select BR2_PACKAGE_SDCSUPP
 		select BR2_PACKAGE_LRD_LINUX_BACKPORTS
 		select BR2_PACKAGE_LRD_LEGACY
 
 	config BR2_LRD_WB45N_LEGACY_RADIO
 		bool "WB45N Radio"
 		select BR2_PACKAGE_WB45N_FIRMWARE_BINARIES
-		select BR2_PACKAGE_SUMMIT_SUPPLICANT_BINARIES
+		select BR2_PACKAGE_SDCSUPP
 		select BR2_PACKAGE_LRD_LINUX_BACKPORTS
 		select BR2_PACKAGE_LRD_LEGACY
 endchoice
@@ -62,21 +66,21 @@ comment "Please config lrd-network-manager in Laird->Packages->lrd-networkmanage
 config BR2_PACKAGE_LRD_60_RADIO_STACK_VERSION_VALUE
 	string "SOM60 radio stack version"
 	depends on BR2_LRD_SOM60_RADIO
-	default "10.0.0.224"
+	default "11.39.0.18"
 	help
 	  Version number for radio packages.
 
 config BR2_PACKAGE_LRD_50_RADIO_STACK_VERSION_VALUE
 	string "WB radio stack version"
 	depends on BR2_LRD_WB50N_RADIO
-	default "10.0.0.224"
+	default "11.39.0.18"
 	help
 	  Version number for radio packages.
 
 config BR2_PACKAGE_LRD_45_RADIO_STACK_VERSION_VALUE
 	string "WB radio stack version"
 	depends on BR2_LRD_WB45N_LEGACY_RADIO
-	default "10.0.0.224"
+	default "11.39.0.18"
 	help
 	  Version number for radio packages.
 
