@@ -69,6 +69,7 @@ cd ${BINARIES_DIR}
 
 # Create keys if not present
 if [ ! -f keys/dev.key ]; then
+	mkdir -p keys
 	${openssl} genrsa -out keys/dev.key 2048
 	${openssl} req -batch -new -x509 -key keys/dev.key -out keys/dev.crt
 	# Create random key, for AES128, key is 16 bytes long
