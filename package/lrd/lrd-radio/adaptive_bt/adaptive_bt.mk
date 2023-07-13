@@ -19,7 +19,12 @@ else
 endif
 endif
 
-ADAPTIVE_BT_DEPENDENCIES = host-pkgconf libnl bluez5_utils-headers
+ADAPTIVE_BT_DEPENDENCIES = host-pkgconf libnl
+ifeq ($(BR2_PACKAGE_BLUEZ_UTILS),y)
+ADAPTIVE_BT_DEPENDENCIES += bluez_utils
+else
+ADAPTIVE_BT_DEPENDENCIES += bluez5_utils
+endif
 
 #
 # BUILD
