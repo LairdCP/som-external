@@ -57,6 +57,11 @@ define WEBLCM_PYTHON_POST_INSTALL_TARGET_HOOK_CMDS
 	$(INSTALL) -D -t $(TARGET_DIR)/usr/bin/weblcm-python.scripts -m 755 $(@D)/*.sh
 	$(INSTALL) -D -t $(TARGET_DIR)/etc -m 644 $(@D)/weblcm-python.ini
 
+	$(INSTALL) -D -t $(TARGET_DIR)/etc/weblcm-python/ssl -m 644 \
+		$(BR2_EXTERNAL_LRD_SOM_PATH)/board/configs-common/keys/rest-server/server.key \
+		$(BR2_EXTERNAL_LRD_SOM_PATH)/board/configs-common/keys/rest-server/server.crt \
+		$(BR2_EXTERNAL_LRD_SOM_PATH)/board/configs-common/keys/rest-server/ca.crt
+
 	$(SED) '/^default_/d' $(TARGET_DIR)/etc/weblcm-python.ini
 	$(SED) '/\[weblcm\]/a default_password: \"$(WEBLCM_PYTHON_DEFAULT_PASSWORD)\"' $(TARGET_DIR)/etc/weblcm-python.ini
 	$(SED) '/\[weblcm\]/a default_username: \"$(WEBLCM_PYTHON_DEFAULT_USERNAME)\"' $(TARGET_DIR)/etc/weblcm-python.ini
@@ -86,18 +91,21 @@ define WEBLCM_PYTHON_POST_INSTALL_TARGET_HOOK_CMDS
 	$(SED) '/^enable_client_auth/d' $(TARGET_DIR)/etc/weblcm-python.ini
 	$(SED) '/\[weblcm\]/a enable_client_auth: \
 		$(if $(findstring y,$(BR2_PACKAGE_WEBLCM_ENABLE_CLIENT_AUTHENTICATION)),True,False)' $(TARGET_DIR)/etc/weblcm-python.ini
+
+	$(SED) '/^certificate_provisioning/d' $(TARGET_DIR)/etc/weblcm-python.ini
+	$(SED) '/\[weblcm\]/a certificate_provisioning: \
+		$(if $(findstring y,$(BR2_PACKAGE_WEBLCM_PYTHON_CERTIFICATE_PROVISIONING)),True,False)' $(TARGET_DIR)/etc/weblcm-python.ini
+
+	$(SED) '/^disable_certificate_expiry_verification/d' $(TARGET_DIR)/etc/weblcm-python.ini
+	$(SED) '/\[weblcm\]/a disable_certificate_expiry_verification: \
+		$(if $(findstring y,$(BR2_PACKAGE_WEBLCM_DISABLE_CERTIFICATE_EXPIRY_VERIFICATION)),True,False)' $(TARGET_DIR)/etc/weblcm-python.ini
 endef
 
-ifeq ($(BR2_PACKAGE_LRD_ENCRYPTED_STORAGE_TOOLKIT),y)
+ifeq ($(BR2_PACKAGE_WEBLCM_PYTHON_CERTIFICATE_PROVISIONING),y)
 define WEBLCM_PYTHON_POST_INSTALL_TARGET_HOOK_CMDS2
-	$(SED) 's,^server.ssl_certificate:.*,server.ssl_certificate: \"/rodata/secret/weblcm-python/ssl/server.crt\",' $(TARGET_DIR)/etc/weblcm-python.ini
-	$(SED) 's,^server.ssl_private_key:.*,server.ssl_private_key: \"/rodata/secret/weblcm-python/ssl/server.key\",' $(TARGET_DIR)/etc/weblcm-python.ini
-	$(SED) 's,^server.ssl_certificate_chain:.*,server.ssl_certificate_chain: \"/rodata/secret/weblcm-python/ssl/ca.crt\",' $(TARGET_DIR)/etc/weblcm-python.ini
-endef
-else
-define WEBLCM_PYTHON_POST_INSTALL_TARGET_HOOK_CMDS2
-	$(INSTALL) -D -t $(TARGET_DIR)/etc/weblcm-python/ssl -m 644 \
-		$(@D)/ssl/server.key $(@D)/ssl/server.crt $(@D)/ssl/ca.crt
+	$(INSTALL) -D $(BR2_EXTERNAL_LRD_SOM_PATH)/board/configs-common/keys/rest-server/server.crt $(TARGET_DIR)/etc/weblcm-python/ssl/provisioning.crt
+	$(INSTALL) -D $(BR2_EXTERNAL_LRD_SOM_PATH)/board/configs-common/keys/rest-server/server.key $(TARGET_DIR)/etc/weblcm-python/ssl/provisioning.key
+	$(INSTALL) -D $(BR2_EXTERNAL_LRD_SOM_PATH)/board/configs-common/keys/rest-server/ca.crt $(TARGET_DIR)/etc/weblcm-python/ssl/provisioning.ca.crt
 endef
 endif
 
