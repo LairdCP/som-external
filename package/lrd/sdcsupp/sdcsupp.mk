@@ -58,7 +58,7 @@ endif
 
 define SDCSUPP_BUILD_CMDS
 	cp $(SDCSUPP_CONFIG) $(@D)/wpa_supplicant/.config
-	$(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(MAKE) -C $(@D)/wpa_supplicant BINDIR=/usr/sbin $(SDCSUPP_FIPS)
+	$(TARGET_MAKE_ENV) $(TARGET_CONFIGURE_OPTS) $(MAKE) -C $(@D)/wpa_supplicant BINDIR=/usr/sbin CONFIG_DRIVER_NL80211=y  $(SDCSUPP_FIPS)
 	$(TARGET_OBJCOPY) $(@D)/wpa_supplicant/wpa_supplicant $(@D)/wpa_supplicant/sdcsupp
 endef
 
